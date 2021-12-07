@@ -32,26 +32,21 @@ jobs:
           
           
 
-#      - name: Build Changelog
-#        id: changelog
-#        uses: mikepenz/release-changelog-builder-action@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          commitMode: true
-
-
+      - name: Build Changelog
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commitMode: true
+          configuration: changelog_configuration.json
+      
+  
 #      - name: Changelog
 #        id: changelog
 #        uses: ardalanamini/auto-changelog@master
 #        with:
 #          token: ${{ secrets.GITHUB_TOKEN }}
-  
-      - name: Run Changelog CI
-        uses: saadmk11/changelog-ci@v1.0.0
-        with:
-          release_version: ${{ steps.package-version.outputs.current-version }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
@@ -60,6 +55,5 @@ jobs:
         with:
           tag_name: v${{ steps.package-version.outputs.current-version}}
           name: Release
-#          body: ${{steps.changelog.outputs.changelog}}
-          body_path: CHANGELOG.md
+          body: ${{steps.changelog.outputs.changelog}}
           files: ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip
