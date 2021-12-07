@@ -31,6 +31,12 @@ jobs:
           zip -r ../ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip ./*
           
           
+
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
         
       - name: Publish GitHub release
@@ -40,5 +46,5 @@ jobs:
         with:
           tag_name: v${{ steps.package-version.outputs.current-version}}
           name: Release
-          generate_release_notes: true
+          body_path: ${{steps.github_release.outputs.changelog}}
           files: ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip
