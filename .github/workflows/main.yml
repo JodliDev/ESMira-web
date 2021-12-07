@@ -39,12 +39,19 @@ jobs:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #        with:
 #          commitMode: true
+
+
+#      - name: Changelog
+#        id: changelog
+#        uses: ardalanamini/auto-changelog@master
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
   
-      - name: Changelog
-        id: changelog
-        uses: ardalanamini/auto-changelog@master
+      - name: Run Changelog CI
+        uses: saadmk11/changelog-ci@v1.0.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          release_version: ${{ steps.package-version.outputs.current-version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
@@ -53,5 +60,6 @@ jobs:
         with:
           tag_name: v${{ steps.package-version.outputs.current-version}}
           name: Release
-          body: ${{steps.changelog.outputs.changelog}}
+#          body: ${{steps.changelog.outputs.changelog}}
+          body_path: CHANGELOG.md
           files: ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip
