@@ -46,5 +46,5 @@ jobs:
         with:
           tag_name: v${{ steps.package-version.outputs.current-version}}
           name: Release
-          body_path: ${{steps.github_release.outputs.changelog}}
+          body: ${{steps.github_release.outputs.changelog}}
           files: ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip
