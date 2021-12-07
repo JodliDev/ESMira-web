@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
   workflow_dispatch:
-    
+  
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
@@ -20,17 +20,18 @@ jobs:
 
       - name: Build for production
         run: npm run prod
+  
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
         
       - name: Zip dist folder
         run: |
           cd dist
-          zip -r ../ESMira-web.zip ./*
+          zip -r ../ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip ./*
           
           
           
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
         
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
@@ -39,5 +40,5 @@ jobs:
         with:
           tag_name: v${{ steps.package-version.outputs.current-version}}
           name: Release
-          files: ESMira-web.zip
           generate_release_notes: true
+          files: ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip
