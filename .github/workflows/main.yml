@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 100
 
       - name: Install Dependencies
         run: npm install
@@ -32,14 +32,19 @@ jobs:
           
           
 
-      - name: Build Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Build Changelog
+#        id: changelog
+#        uses: mikepenz/release-changelog-builder-action@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          commitMode: true
+  
+      - name: Changelog
+        id: changelog
+        uses: ardalanamini/auto-changelog@master
         with:
-          commitMode: true
-          
+          token: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
@@ -48,5 +53,5 @@ jobs:
         with:
           tag_name: v${{ steps.package-version.outputs.current-version}}
           name: Release
-          body: ${{steps.github_release.outputs.changelog}}
+          body: ${{steps.changelog.outputs.changelog}}
           files: ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip
