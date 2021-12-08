@@ -38,7 +38,7 @@
 	],
 	"transformers": [],
 	"tag_resolver": {
-		"method": "semver",
+		"method": "semver"
 	},
 	"base_branches": []
 }
