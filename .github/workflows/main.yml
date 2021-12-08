@@ -24,11 +24,6 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
-        
-      - name: Zip dist folder
-        run: |
-          cd dist
-          zip -r ../ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip ./*
           
           
 
@@ -40,6 +35,11 @@ jobs:
         with:
           commitMode: true
           configuration: ./.github/workflows/changelog_configuration.json
+
+      - name: Zip dist folder
+        run: |
+          cd dist
+          zip -r ../ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip ./*
       
   
 #      - name: Changelog
