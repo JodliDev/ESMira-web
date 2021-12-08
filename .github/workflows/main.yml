@@ -32,7 +32,7 @@ jobs:
           
           
       - name: Changelog generation step
-        uses: conventional-changelog-generator@v1.0.6-release
+        uses: Helmisek/conventional-changelog-generator@v1.0.6-release
         id: changelog
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
