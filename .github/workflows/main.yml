@@ -38,6 +38,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-types: "fix:Bug Fixes,feat:Features,refactor:Refactoring"
           current-tag: ${{ steps.package-version.outputs.current-version }}
+          template-path: "./.github/workflows/CHANGELOG.tpl.md"
           
 #      - name: Build Changelog
 #        id: changelog
