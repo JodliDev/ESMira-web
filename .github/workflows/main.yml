@@ -35,7 +35,7 @@ jobs:
         uses: Helmisek/conventional-changelog-generator@v1.0.6-release
         id: changelog
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-types: "fix:Bug Fixes,feat:Features,refactor:Refactoring"
           current-tag: ${{ steps.package-version.outputs.current-version }}
           
