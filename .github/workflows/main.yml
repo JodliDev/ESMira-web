@@ -57,7 +57,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: Latest release
+          name: Latest release (version ${{ steps.autotag.outputs.version }})
           tag_name: latest
+          body: ${{ steps.changelog.outputs.changelog }}
+          files: ESMira-web.zip
+
+
+      - name: Publish GitHub prerelease release
+        if: ${{ steps.autotag.outputs.tagcreated == 'no' }}
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Pre release
+          tag_name: prerelease
           body: ${{ steps.changelog.outputs.changelog }}
           files: ESMira-web.zip
