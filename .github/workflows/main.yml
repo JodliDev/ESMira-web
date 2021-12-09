@@ -22,7 +22,7 @@ jobs:
         run: npm run prod
 
       - name: Create tag
-        uses: rbkmoney/action-autotag@v1
+        uses: butlerlogic/action-autotag@stable
         id: autotag
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
