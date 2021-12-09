@@ -53,3 +53,13 @@ jobs:
           tag_name: v${{ steps.autotag.outputs.version}}
           body: ${{steps.changelog.outputs.changelog}}
           files: ESMira-web-v${{ steps.autotag.outputs.version}}.zip
+
+      - name: Publish GitHub latest release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Latest release version
+          tag_name: latest
+          body: ${{steps.changelog.outputs.changelog}}
+          files: ESMira-web-latest.zip
