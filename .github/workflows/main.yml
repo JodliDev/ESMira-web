@@ -22,11 +22,11 @@ jobs:
         run: npm run prod
 
       - name: Create tag
-        uses: butlerlogic/action-autotag@stable
+        uses: rbkmoney/action-autotag@v1
         id: autotag
-        with:
+        env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          strategy: package
+        with:
           tag_prefix: "v"
         
       - name: Zip dist folder
@@ -62,9 +62,7 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           files: ESMira-web.zip
 
-
       - name: Publish GitHub prerelease release
-        if: ${{ steps.autotag.outputs.tagcreated == 'no' }}
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
