@@ -40,6 +40,9 @@ jobs:
         id: changelog
         env:
           REPO: ${{ github.repository }}
+        with:
+          from-tag: "current tag"
+          to-tag: HEAD
       
       - name: Publish GitHub release
         if: ${{ steps.autotag.outputs.tagcreated == 'yes' }}
