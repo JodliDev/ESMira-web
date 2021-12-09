@@ -30,11 +30,11 @@ jobs:
           cd dist
           zip -r ../ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip ./*
   
-      - name: Create tag
-        uses: Klemensas/action-autotag@stable
-        id: autotag
-        with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+#      - name: Create tag
+#        uses: Klemensas/action-autotag@stable
+#        id: autotag
+#        with:
+#          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           
           
 #      - name: Changelog generation step
@@ -62,15 +62,20 @@ jobs:
 #        uses: ardalanamini/auto-changelog@master
 #        with:
 #          token: ${{ secrets.GITHUB_TOKEN }}
-        
+
+
+      - name: Changelog
+        uses: scottbrenner/generate-changelog-action@master
+        id: changelog
+      
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: Release
-#          tag_name: v${{ steps.package-version.outputs.current-version}}
-          tag_name: v${{ steps.autotag.outputs.version }}
-#          body: ${{steps.changelog.outputs.changelog}}
-          body: ${{steps.autotag.outputs.tagmessage}}
+          tag_name: v${{ steps.package-version.outputs.current-version}}
+#          tag_name: v${{ steps.autotag.outputs.version }}
+          body: ${{steps.changelog.outputs.changelog}}
+#          body: ${{steps.autotag.outputs.tagmessage}}
           files: ESMira-web-v${{ steps.package-version.outputs.current-version}}.zip
