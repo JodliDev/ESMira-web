@@ -45,16 +45,16 @@ jobs:
           tag_name: v${{ steps.autotag.outputs.version}}
           body_path: changelog.md
           files: ESMira-web.zip
-          
 
       - name: Create stable release
         if: ${{ steps.autotag.outputs.tagcreated == 'yes' }}
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: Latest stable release (version ${{ steps.autotag.outputs.version }})
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "stable"
-          prerelease: false
+          tag_name: stable
+          body_path: changelog.md
           files: ESMira-web.zip
 
       - name: Create latest prerelease
