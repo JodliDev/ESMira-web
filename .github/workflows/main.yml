@@ -27,6 +27,7 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
+          strategy: package
           tag_prefix: "v"
         
       - name: Zip dist folder
